@@ -1,0 +1,56 @@
+﻿/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright © 2018-2022 Sander Stolk */
+
+/* search results */
+.search-results-entry,
+.search-results-subheader {
+    padding: 0.25rem;
+    margin-bottom: 0.5rem;
+    background-color: #d8d8d8;
+    border: darkgrey 1px solid;
+    display: inline-block;
+}
+.search-results-entry:hover,
+.search-results-subheader:hover {
+    background-color: #f8f9fa;
+}
+.search-results-entry-details,
+.search-results-subheader-details {
+    margin-left: 10px;
+    opacity: 0.5;
+}
+
+/* badges */
+.badge-secondary {
+    color: #fff;
+    background-color: #868e96;
+}
+
+.badge {
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}
+
+/* custom icons */
+.icon-term-type {
+    display: inline-block;
+    font-family: "Icons";
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: middle;
+    width: 10px;
+    height: 10px;
+    background: url(http://evoke.ullet.net/app/static/img/icon-term-type.svg);
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}

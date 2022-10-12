@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Towards an Andreas thesaurus</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.2/pdf.min.js"></script>
+	<script src="js/pdf2svg.js"></script>
+    <script src="js/file.js"></script>
+    <script src="js/dataset.js"></script>
+    
+    <link rel="stylesheet" href="./css/w3.css" />
+    <link rel="stylesheet" href="./css/evoke.css" />
+    <link rel="stylesheet" href="./css/menu.css" />
+    <link rel="stylesheet" href="./css/custom.css" />
+    
+    <script>
+    const LOCALSTORAGE_KEY = 'alignment-andreas';
+    const DEFAULT_ANNOTATION = '#andreas';
+    const ONTOLOGY_IRI   = 'https://w3id.org/evoke/set/andreas';
+    const NAMESPACE_DATA = 'https://w3id.org/evoke/';
+    const AGRAPH_REPO  = 'http://142.93.226.251:10035/repositories/evoke/statements';
+    const AGRAPH_GRAPH = ONTOLOGY_IRI;
+    
+    function isEntryMaterial(pageNumber, location) {
+        if (pageNumber == 1)
+            return false;
+        if (pageNumber == 2 && location[5] > 480)
+            return false;
+        return (location[5] < 590 && location[5] > 60);
+    }
+    function isEntryStart(pageNumber, location) {
+        return ((pageNumber%2 == 1 && location[4] > 58.5  && location[4] < 60.8) // typical margin: 2.25
+             || (pageNumber%2 == 1 && location[4] > 226 && location[4] < 230)
+             || (pageNumber%2 == 0 && location[4] > 58.5  && location[4] < 60.8)
+             || (pageNumber%2 == 0 && location[4] > 226 && location[4] < 230));
+    }
+    </script>
+</head>
+<body>
+  <h1 style="font-size:1.5em;">Towards an <em>Andreas</em> Thesaurus</h1>
+  
+  <div id="menu" class="dropdown">
+  <button class="dropbtn">☰</button>
+  <div class="dropdown-content">
+    <span>Backup</span>
+    <a onClick="javascript:downloadFile('andreas.json',JSON.stringify(getAlignmentData()),'application/json');">get JSON</a>
+    <span>Share</span>
+    <a onClick="javascript:publishRDF(toRDF(getAlignmentData(), NAMESPACE_DATA, ONTOLOGY_IRI, DEFAULT_ANNOTATION), 'text/turtle', AGRAPH_REPO, AGRAPH_GRAPH);">publish on Evoke</a>
+    <a onClick="javascript:downloadFile('andreas.ttl',toRDF(getAlignmentData(), NAMESPACE_DATA, ONTOLOGY_IRI, DEFAULT_ANNOTATION),'text/turtle');">get RDF</a>
+    <span>Initialize</span>
+    <a onClick="javascript:saveInLocalStorage(selectFile(), LOCALSTORAGE_KEY);">from JSON</a>
+    <a onClick="javascript:localStorage.removeItem(LOCALSTORAGE_KEY);alert('Cleared alignment in localStorage');">discard all</a>
+  </div>
+  </div>
+  
+  <form>
+   <div class="dropzone" id="dropzone-files">Drop glossary file(s) here</div>
+   <output id="list"></output>
+  </form>
+  
+  <div id="pageNavigation"></div>
+  <div id="pageContainer"></div>
+  <div id="mapContainer"><table id="mappingTable" class="w3-table-all w3-small w3-hoverable"></table></div>
+
+</body>
+</html>
